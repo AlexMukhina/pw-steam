@@ -1,0 +1,31 @@
+name: "e2e"
+on: [push]
+jobs:
+  test-e2e:
+    name: Run E2E tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run your tests
+        run: npx playwright test --reporter=line,allure-playwright
+      
+      - name: Generate Allure Report
+        run: |
+          npx allure generate allure-results --clean -o allure-report
+          npx allure open allure-report
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
