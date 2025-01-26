@@ -1,4 +1,4 @@
-name: "e2e"
+name: "e2eTests"
 on: [push]
 jobs:
   test-e2e:
@@ -25,7 +25,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3 
         with:
           name: allure-report
           path: allure-report
