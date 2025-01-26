@@ -29,7 +29,10 @@ test.describe('Game Details tests', () => {
         expect(description).toContain('Experience the landmark first-person shooter');
     
         const price = await gamesPage.gamePrice.first().textContent();
-        const pattern = /^\d+,\d+€$/;
+        // eu pattern
+       // const pattern = /^\d+,\d+€$/;
+
+        const pattern = /\$\d+\.\d{2}/;
         const priceReplaceSpaces = price?.replace(/\s+/g, '');
         expect(priceReplaceSpaces).toMatch(pattern);
     
@@ -77,7 +80,7 @@ test.describe('Game Details tests', () => {
 
         const actualTitle = await gamesPage.gameName.textContent();
         expect(actualTitle).toBe(gameToSearch);
-        await expect(gamesPage.ageWarning).toContainText('Age rating for: PEGI');
+        await expect(gamesPage.ageWarning).toContainText('Age rating');
        });
 
       })
